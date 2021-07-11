@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '/data/funcs.dart';
+import '/data/theme.dart';
 import '/services/auth.dart';
 import '/services/router.dart';
 
@@ -10,23 +10,23 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.55,
+      width: MediaQuery.of(context).size.width * 0.5,
       child: Drawer(
         child: Container(
+          color: mainColor,
           padding: EdgeInsets.symmetric(vertical: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                height: getScaffoldSize(context) * 0.4,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
                       children: [
                         Container(
                           height: 100,
-                          child: Image.asset('assets/logo.png'),
+                          child: Image.asset('assets/logo_white.png'),
                         ),
                         SizedBox(
                           height: 10,
@@ -34,11 +34,15 @@ class CustomDrawer extends StatelessWidget {
                         Text(
                           'МЕНЮ',
                           style: TextStyle(
+                            color: Colors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
+                    ),
+                    SizedBox(
+                      height: 100,
                     ),
                     ListView(
                       padding: EdgeInsets.zero,
@@ -55,6 +59,12 @@ class CustomDrawer extends StatelessWidget {
                           label: 'VIP прогноз',
                           onPressed: () =>
                               Navigator.pushNamed(context, vipRoute),
+                        ),
+                        DrawerOption(
+                          icon: Icons.store,
+                          label: 'Магазин VIP',
+                          onPressed: () =>
+                              Navigator.pushNamed(context, storeRoute),
                         ),
                       ],
                     ),
@@ -99,11 +109,15 @@ class DrawerOption extends StatelessWidget {
           children: [
             Container(
               margin: EdgeInsets.only(bottom: 12, top: 12, right: 10),
-              child: Icon(icon, size: 35, color: Colors.black),
+              child: Icon(icon, size: 33, color: Colors.white),
             ),
             Text(
               label,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
             ),
           ],
         ),

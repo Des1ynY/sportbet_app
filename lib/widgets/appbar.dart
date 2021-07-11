@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
 import '/data/theme.dart';
+import '/data/funcs.dart';
 
 class CustomAppBar extends StatefulWidget {
-  const CustomAppBar({required this.label});
+  const CustomAppBar({
+    required this.label,
+    required this.stats,
+  });
+
   final String label;
+  final bool stats;
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
-  String currentFilter = 'Все';
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,27 +24,29 @@ class _CustomAppBarState extends State<CustomAppBar> {
       color: mainColor,
       child: Column(
         children: [
-          Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                height: 40,
-                child: RawMaterialButton(
-                  onPressed: () => Scaffold.of(context).openDrawer(),
-                  child: Image.asset('assets/logo_white.png'),
+          Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-              Text(
-                widget.label,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
+                Container(
+                  height: 40,
+                  child: RawMaterialButton(
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                    child: Image.asset('assets/logo_white.png'),
+                  ),
                 ),
-              ),
-            ],
+                Text(
+                  widget.label,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
           ),
           Container(
             height: 55,
@@ -50,9 +56,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               children: [
                 'Все',
                 'Футбол',
-                'Хоккей',
-                'Волейбол',
-                'Киберспорт',
+                'Большой теннис',
               ]
                   .map(
                     (val) => Container(
@@ -64,27 +68,40 @@ class _CustomAppBarState extends State<CustomAppBar> {
                             BoxConstraints(minWidth: 10, maxHeight: 15),
                         onPressed: () {
                           setState(() {
-                            currentFilter = val;
+                            widget.stats
+                                ? currentFilterStats = val
+                                : currentFilterVIP = val;
                           });
                         },
                         child: Container(
                           padding: EdgeInsets.only(bottom: 5),
                           decoration: BoxDecoration(
-                            border: currentFilter == val
-                                ? Border(
-                                    bottom: BorderSide(
-                                        color: Colors.white, width: 2),
-                                  )
-                                : null,
+                            border: widget.stats
+                                ? currentFilterStats == val
+                                    ? Border(
+                                        bottom: BorderSide(
+                                            color: Colors.white, width: 2),
+                                      )
+                                    : null
+                                : currentFilterVIP == val
+                                    ? Border(
+                                        bottom: BorderSide(
+                                            color: Colors.white, width: 2),
+                                      )
+                                    : null,
                           ),
                           child: Text(
                             val,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
-                              fontWeight: currentFilter == val
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
+                              fontWeight: widget.stats
+                                  ? currentFilterStats == val
+                                      ? FontWeight.bold
+                                      : FontWeight.normal
+                                  : currentFilterVIP == val
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
                             ),
                           ),
                         ),

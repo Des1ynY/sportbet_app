@@ -1,35 +1,57 @@
-import 'package:betting_tips/data/funcs.dart';
 import 'package:flutter/material.dart';
+
+import '/data/funcs.dart';
+import '/widgets/dialod.dart';
 
 class ForecastTile extends StatefulWidget {
   const ForecastTile({
-    required this.icon,
+    required this.forecast,
+    required this.sport,
     required this.matchDate,
     required this.winner,
     required this.team1,
     required this.team2,
     required this.league,
+    required this.coef,
+    required this.predicted,
     Key? key,
   }) : super(key: key);
 
-  final IconData icon;
   final int winner;
-  final String matchDate, team1, team2, league;
+  final double coef;
+  final bool predicted;
+  final String matchDate, team1, team2, league, sport, forecast;
 
   @override
   _ForecastTileState createState() => _ForecastTileState();
 }
 
 class _ForecastTileState extends State<ForecastTile> {
-  Color linesColor = Color(0xff9498A1);
+  Color linesColor = Color(0xff5B5C61);
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    bool isOpen = false;
 
     return RawMaterialButton(
-      onPressed: () => setState(() => isOpen = !isOpen),
+      onPressed: () => showDialog(
+        context: context,
+        builder: (context) {
+          return CustomDialog(
+            data: {
+              'sport': widget.sport,
+              'league': widget.league,
+              'date': widget.matchDate,
+              'team1': widget.team1,
+              'team2': widget.team2,
+              'coef': widget.coef,
+              'winner': widget.winner,
+              'forecast': widget.forecast,
+              'predicted': widget.predicted,
+            },
+          );
+        },
+      ),
       child: Container(
         width: width,
         height: 110,
@@ -37,21 +59,24 @@ class _ForecastTileState extends State<ForecastTile> {
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(22),
-          color: Color(0xffF3F5FA),
+          color: Color(0xffECEEF2),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              width: width * 0.15,
+              width: width * 0.11,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(widget.icon, color: linesColor, size: 30),
+                  Icon(
+                      widget.sport == 'Футбол'
+                          ? Icons.sports_soccer
+                          : Icons.sports_tennis,
+                      color: linesColor,
+                      size: 30),
                   Divider(
                     color: linesColor,
-                    indent: 10,
-                    endIndent: 10,
                     thickness: 1.5,
                   ),
                   Text(
@@ -112,6 +137,26 @@ class _ForecastTileState extends State<ForecastTile> {
                   ],
                 ),
               ),
+            ),
+            VerticalDivider(
+              color: linesColor,
+              indent: 10,
+              endIndent: 10,
+              thickness: 1,
+            ),
+            Container(
+              width: width * 0.11,
+              child: widget.predicted
+                  ? Icon(
+                      Icons.check,
+                      color: Colors.green.shade300,
+                      size: 30,
+                    )
+                  : Icon(
+                      Icons.close,
+                      color: Colors.red.shade400,
+                      size: 30,
+                    ),
             ),
           ],
         ),

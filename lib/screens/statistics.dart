@@ -1,4 +1,3 @@
-import 'package:betting_tips/widgets/forecast.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +5,7 @@ import '/data/funcs.dart';
 import '/data/theme.dart';
 import '/widgets/appbar.dart';
 import '/widgets/drawer.dart';
+import '/widgets/forecast.dart';
 
 class Statistics extends StatefulWidget {
   const Statistics({Key? key}) : super(key: key);
@@ -20,11 +20,10 @@ class _StatisticsState extends State<Statistics> {
     return ColorfulSafeArea(
       color: mainColor,
       child: Scaffold(
-        drawerEnableOpenDragGesture: false,
         drawer: CustomDrawer(),
         body: Stack(
           children: [
-            CustomAppBar(label: 'СТАТИСТИКА'),
+            CustomAppBar(label: 'СТАТИСТИКА', stats: true),
             DraggableScrollableSheet(
               initialChildSize:
                   (getScaffoldSize(context) - 140) / getScaffoldSize(context),
@@ -41,18 +40,25 @@ class _StatisticsState extends State<Statistics> {
                     color: Theme.of(context).scaffoldBackgroundColor,
                   ),
                   child: ListView.builder(
+                    itemCount: forecasts.length,
                     controller: scrollControl,
                     shrinkWrap: true,
                     padding: EdgeInsets.all(20),
                     itemBuilder: (context, index) {
-                      return ForecastTile(
-                        icon: Icons.sports_soccer_rounded,
-                        matchDate: DateTime.now().toIso8601String(),
-                        winner: 0,
-                        team1: 'Paris Sen Germen',
-                        team2: 'Nantes',
-                        league: 'France League 1',
-                      );
+                      switch (currentFilterStats) {
+                        case 'Все':
+                          return forecasts[index];
+                        case 'Футбол':
+                          return forecasts[index].sport == 'Футбол'
+                              ? forecasts[index]
+                              : Container();
+                        case 'Большой теннис':
+                          return forecasts[index].sport == 'Теннис'
+                              ? forecasts[index]
+                              : Container();
+                        default:
+                          return Container();
+                      }
                     },
                   ),
                 );
@@ -64,3 +70,72 @@ class _StatisticsState extends State<Statistics> {
     );
   }
 }
+
+List<ForecastTile> forecasts = [
+  ForecastTile(
+    sport: 'Футбол',
+    matchDate: DateTime.now().toIso8601String(),
+    winner: 0,
+    team1: 'Paris SG',
+    team2: 'Nantes',
+    league: 'France League 1',
+    coef: 1.5,
+    predicted: true,
+    forecast: 'Goals over 1.5',
+  ),
+  ForecastTile(
+    sport: 'Теннис',
+    matchDate: DateTime.now().toIso8601String(),
+    winner: 0,
+    team1: 'Paris SG',
+    team2: 'Nantes',
+    league: 'France League 1',
+    coef: 1.5,
+    predicted: true,
+    forecast: 'Goals over 1.5',
+  ),
+  ForecastTile(
+    sport: 'Теннис',
+    matchDate: DateTime.now().toIso8601String(),
+    winner: 1,
+    team1: 'Paris SG',
+    team2: 'Nantes',
+    league: 'France League 1',
+    coef: 1.5,
+    predicted: false,
+    forecast: 'Goals over 1.5',
+  ),
+  ForecastTile(
+    sport: 'Футбол',
+    matchDate: DateTime.now().toIso8601String(),
+    winner: 0,
+    team1: 'Paris SG',
+    team2: 'Nantes',
+    league: 'France League 1',
+    coef: 1.5,
+    predicted: true,
+    forecast: 'Goals over 1.5',
+  ),
+  ForecastTile(
+    sport: 'Теннис',
+    matchDate: DateTime.now().toIso8601String(),
+    winner: 0,
+    team1: 'Paris SG',
+    team2: 'Nantes',
+    league: 'France League 1',
+    coef: 1.5,
+    predicted: true,
+    forecast: 'Goals over 1.5',
+  ),
+  ForecastTile(
+    sport: 'Футбол',
+    matchDate: DateTime.now().toIso8601String(),
+    winner: 0,
+    team1: 'Paris SG',
+    team2: 'Nantes',
+    league: 'France League 1',
+    coef: 1.5,
+    predicted: false,
+    forecast: 'Goals over 1.5',
+  ),
+];

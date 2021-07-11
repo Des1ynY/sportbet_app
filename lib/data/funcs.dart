@@ -1,5 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
+
+String currentFilterStats = 'Все';
+String currentFilterVIP = 'Все';
 
 bool isValidEmail(String? value) {
   if (value != null) {
@@ -28,4 +31,15 @@ double getScaffoldSize(BuildContext context) {
 String formatTime(String date) {
   DateTime matchDate = DateTime.parse(date);
   return sprintf('%02d:%02d', [matchDate.hour, matchDate.hour]);
+}
+
+String getFormattedDate(String date) {
+  DateTime matchDate = DateTime.parse(date);
+  return sprintf('%02d.%02d.%04d %02d:%02d', [
+    matchDate.day,
+    matchDate.month,
+    matchDate.year,
+    matchDate.hour,
+    matchDate.hour
+  ]);
 }
