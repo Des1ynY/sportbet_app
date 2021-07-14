@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '/data/theme.dart';
 import '/services/auth.dart';
 import '/services/router.dart';
+import '/data/funcs.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.5,
+      width: MediaQuery.of(context).size.width * 0.55,
       child: Drawer(
         child: Container(
           color: mainColor,
@@ -62,7 +63,7 @@ class CustomDrawer extends StatelessWidget {
                         ),
                         DrawerOption(
                           icon: Icons.store,
-                          label: 'Магазин VIP',
+                          label: 'VIP подписка',
                           onPressed: () =>
                               Navigator.pushNamed(context, storeRoute),
                         ),
@@ -74,7 +75,16 @@ class CustomDrawer extends StatelessWidget {
               DrawerOption(
                 icon: Icons.logout,
                 label: 'Выйти',
-                onPressed: () => AuthServices.signOut(),
+                onPressed: () {
+                  AuthServices.signOut();
+                  currentFilterStats = 'Все';
+                  currentFilterVIP = 'Все';
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    signInRoute,
+                    (route) => false,
+                  );
+                },
               )
             ],
           ),

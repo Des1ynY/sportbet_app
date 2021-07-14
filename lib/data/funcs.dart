@@ -30,16 +30,14 @@ double getScaffoldSize(BuildContext context) {
 
 String formatTime(String date) {
   DateTime matchDate = DateTime.parse(date);
-  return sprintf('%02d:%02d', [matchDate.hour, matchDate.hour]);
+  return sprintf('%02d:%02d', [matchDate.hour, matchDate.minute]);
 }
 
 String getFormattedDate(String date) {
   DateTime matchDate = DateTime.parse(date);
-  return sprintf('%02d.%02d.%04d %02d:%02d', [
+  return sprintf('%02d.%02d.%04d', [
     matchDate.day,
     matchDate.month,
     matchDate.year,
-    matchDate.hour,
-    matchDate.hour
   ]);
 }

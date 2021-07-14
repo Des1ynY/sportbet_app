@@ -33,6 +33,9 @@ class MyApp extends StatelessWidget {
           return ScrollConfiguration(
               behavior: NoGlowScrollEffect(), child: child ?? Container());
         },
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+        ),
         title: 'Betting Tips',
         debugShowCheckedModeBanner: false,
         onGenerateRoute: generateRoute,

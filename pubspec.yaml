@@ -1,5 +1,7 @@
 name: betting_tips
-description: A bet app with tips and forecasts.
+description: A new Flutter project.
+
+publish_to: 'none' 
 
 version: 1.0.0+1
 
@@ -10,16 +12,23 @@ dependencies:
   flutter:
     sdk: flutter
 
+
   firebase_core: any
   firebase_auth: any
   cloud_firestore: any
   fluttertoast: any
-  flutter_native_splash: any
   flutter_local_notifications: any
   colorful_safe_area: any
   sprintf: any
+  random_string: ^2.2.0-nullsafety
   provider: any
   cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_native_splash: any
 
 flutter_native_splash:
   color: '#ffffff'
@@ -27,13 +36,14 @@ flutter_native_splash:
   android: true
   ios: true
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
 flutter:
 
   uses-material-design: true
 
   assets:
     - assets/
+
+  fonts:
+    - family: CustomIcons
+      fonts:
+        - asset: assets/fonts/CustomIcons.ttf

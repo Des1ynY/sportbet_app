@@ -16,7 +16,7 @@ class _SignUpState extends State<SignUp> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   FocusNode _passwordField = FocusNode(), _passDuplicateFiled = FocusNode();
   String _email = '', _password = '', _passDuplicate = '';
-  bool _isLoading = false, _invisiblePassword = true;
+  bool _isLoading = false, _invisiblePassword = true, _secondPass = true;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class _SignUpState extends State<SignUp> {
                     Text(
                       'Betting Tips',
                       style: TextStyle(
-                        color: header,
+                        color: mainColor,
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
                       ),
@@ -101,7 +101,11 @@ class _SignUpState extends State<SignUp> {
                           suffixIcon: RawMaterialButton(
                             constraints:
                                 BoxConstraints(minHeight: 0, maxHeight: 14),
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                _invisiblePassword = !_invisiblePassword;
+                              });
+                            },
                             child: Icon(
                               Icons.visibility,
                               color: Colors.black,
@@ -118,7 +122,7 @@ class _SignUpState extends State<SignUp> {
                         obscureText: _invisiblePassword,
                         onChanged: (value) => _password = value,
                         validator: (value) =>
-                            isValidPass(value) ? null : 'Неверный пароль',
+                            isValidPass(value) ? null : 'Некорректный пароль',
                         onFieldSubmitted: (value) => FocusScope.of(context)
                             .requestFocus(_passDuplicateFiled),
                       ),
@@ -147,7 +151,11 @@ class _SignUpState extends State<SignUp> {
                           suffixIcon: RawMaterialButton(
                             constraints:
                                 BoxConstraints(minHeight: 0, maxHeight: 14),
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                _secondPass = !_secondPass;
+                              });
+                            },
                             child: Icon(
                               Icons.visibility,
                               color: Colors.black,
@@ -161,7 +169,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                         focusNode: _passDuplicateFiled,
                         keyboardType: TextInputType.visiblePassword,
-                        obscureText: _invisiblePassword,
+                        obscureText: _secondPass,
                         onChanged: (value) => _passDuplicate = value,
                         validator: (value) => _password == _passDuplicate
                             ? null
@@ -185,7 +193,9 @@ class _SignUpState extends State<SignUp> {
                   child: MaterialButton(
                     onPressed: () => _submit(),
                     child: _isLoading
-                        ? CircularProgressIndicator()
+                        ? CircularProgressIndicator(
+                            color: Colors.white,
+                          )
                         : Text(
                             'Зарегистрироваться',
                             style: TextStyle(

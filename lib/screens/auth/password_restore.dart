@@ -35,7 +35,7 @@ class _RestoreState extends State<Restore> {
                   Text(
                     'Betting Tips',
                     style: TextStyle(
-                      color: header,
+                      color: mainColor,
                       fontSize: 36,
                       fontWeight: FontWeight.bold,
                     ),

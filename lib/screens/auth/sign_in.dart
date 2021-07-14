@@ -1,9 +1,9 @@
-import 'package:betting_tips/services/router.dart';
 import 'package:flutter/material.dart';
 
 import '/data/funcs.dart';
 import '/data/theme.dart';
 import '/services/auth.dart';
+import '/services/router.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -42,7 +42,7 @@ class _SignInState extends State<SignIn> {
                     Text(
                       'Betting Tips',
                       style: TextStyle(
-                        color: header,
+                        color: mainColor,
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
                       ),
@@ -105,7 +105,11 @@ class _SignInState extends State<SignIn> {
                           suffixIcon: RawMaterialButton(
                             constraints:
                                 BoxConstraints(minHeight: 0, maxHeight: 14),
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                _invisiblePassword = !_invisiblePassword;
+                              });
+                            },
                             child: Icon(
                               Icons.visibility,
                               color: Colors.black,
@@ -161,7 +165,9 @@ class _SignInState extends State<SignIn> {
                       child: MaterialButton(
                         onPressed: () => _submit(),
                         child: _isLoading
-                            ? CircularProgressIndicator()
+                            ? CircularProgressIndicator(
+                                color: Colors.white,
+                              )
                             : Text(
                                 'Войти',
                                 style: TextStyle(

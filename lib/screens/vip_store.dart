@@ -1,9 +1,10 @@
-import 'package:betting_tips/data/funcs.dart';
-import 'package:betting_tips/data/theme.dart';
-import 'package:betting_tips/widgets/drawer.dart';
-
 import 'package:flutter/material.dart';
-import 'package:sprintf/sprintf.dart';
+
+import '/data/funcs.dart';
+import '/data/theme.dart';
+import '/widgets/logo.dart';
+import '/widgets/drawer.dart';
+import '/widgets/open_drawer_button.dart';
 
 class Store extends StatefulWidget {
   const Store({Key? key}) : super(key: key);
@@ -19,35 +20,35 @@ class _StoreState extends State<Store> {
       child: Scaffold(
         drawer: CustomDrawer(),
         body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-            height: getScaffoldSize(context),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
+          child: Stack(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+                height: getScaffoldSize(context),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    LogoButton(),
-                    Text(
-                      'Магазин VIP',
-                      style: TextStyle(
-                        color: header,
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Logo(
+                      label: 'VIP Подписка',
                     ),
+                    Spacer(flex: 2),
+                    VIPStoreTile(lastsFor: '1 день', cost: 250),
+                    Spacer(),
+                    VIPStoreTile(lastsFor: '3 дня', cost: 700),
+                    Spacer(),
+                    VIPStoreTile(
+                        lastsFor: '7 дней', cost: 1250, profitable: true),
+                    Spacer(flex: 3),
                   ],
                 ),
-                Spacer(flex: 2),
-                VIPStoreTile(lastsFor: '1 день', cost: 3.5),
-                Spacer(),
-                VIPStoreTile(lastsFor: '3 дня', cost: 7),
-                Spacer(),
-                VIPStoreTile(lastsFor: '7 дней', cost: 12),
-                Spacer(flex: 3),
-              ],
-            ),
+              ),
+              Positioned(
+                bottom: 10,
+                right: 10,
+                child: OpenDrawerButton(),
+              ),
+            ],
           ),
         ),
       ),
@@ -64,7 +65,7 @@ class VIPStoreTile extends StatelessWidget {
   }) : super(key: key);
 
   final String lastsFor;
-  final double cost;
+  final int cost;
   final bool profitable;
 
   @override
@@ -76,56 +77,72 @@ class VIPStoreTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Color(0xff3955B6), width: 2),
       ),
-      child: MaterialButton(
-        onPressed: () {},
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Container(
-                child: Text(
-                  '$lastsFor доступа к VIP',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
+      child: Stack(
+        alignment: Alignment.topRight,
+        children: [
+          MaterialButton(
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Container(
+                    child: Text(
+                      '$lastsFor доступа\nк VIP Прогнозам',
+                      style: TextStyle(
+                        color: header,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            VerticalDivider(
-              thickness: 1.5,
-              color: Color(0xff9498A1),
-              indent: 20,
-              endIndent: 20,
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 5),
-              child: Text(
-                sprintf('%.02f ₽', [cost]),
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red.shade900,
+                VerticalDivider(
+                  thickness: 1,
+                  color: Color(0xffD4D4D4),
+                  indent: 20,
+                  endIndent: 20,
                 ),
-              ),
+                Container(
+                  width: 85,
+                  padding: EdgeInsets.only(left: 5),
+                  alignment: Alignment.center,
+                  child: Text(
+                    '$cost ₽',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xffE93E3E),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class LogoButton extends StatelessWidget {
-  const LogoButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      child: RawMaterialButton(
-        onPressed: () => Scaffold.of(context).openDrawer(),
-        child: Image.asset('assets/logo.png'),
+          ),
+          profitable
+              ? Positioned(
+                  top: 8,
+                  right: -24,
+                  child: RotationTransition(
+                    turns: AlwaysStoppedAnimation(33 / 360),
+                    child: Container(
+                      color: Color(0xffE93E3E),
+                      alignment: Alignment.center,
+                      width: 100,
+                      height: 20,
+                      child: Text(
+                        'Выгодно',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : Container(),
+        ],
       ),
     );
   }

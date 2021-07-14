@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 
@@ -5,7 +6,11 @@ import '/data/funcs.dart';
 import '/data/theme.dart';
 import '/widgets/appbar.dart';
 import '/widgets/drawer.dart';
-import '/widgets/forecast.dart';
+import '/services/database.dart';
+import '/widgets/scroll_sheet.dart';
+import '/widgets/open_drawer_button.dart';
+
+PageController statsController = PageController();
 
 class Statistics extends StatefulWidget {
   const Statistics({Key? key}) : super(key: key);
@@ -15,6 +20,17 @@ class Statistics extends StatefulWidget {
 }
 
 class _StatisticsState extends State<Statistics> {
+  late Stream<QuerySnapshot<Map<String, dynamic>>>? statsForecastsDB;
+  late Stream<QuerySnapshot<Map<String, dynamic>>>? statsFootballDB;
+  late Stream<QuerySnapshot<Map<String, dynamic>>>? statsTennisDB;
+  bool isLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getForecasts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ColorfulSafeArea(
@@ -23,119 +39,59 @@ class _StatisticsState extends State<Statistics> {
         drawer: CustomDrawer(),
         body: Stack(
           children: [
-            CustomAppBar(label: 'СТАТИСТИКА', stats: true),
-            DraggableScrollableSheet(
-              initialChildSize:
-                  (getScaffoldSize(context) - 140) / getScaffoldSize(context),
-              minChildSize:
-                  (getScaffoldSize(context) - 140) / getScaffoldSize(context),
-              maxChildSize: 1,
-              builder: (context, scrollControl) {
-                return Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25),
-                    ),
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                  ),
-                  child: ListView.builder(
-                    itemCount: forecasts.length,
-                    controller: scrollControl,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.all(20),
-                    itemBuilder: (context, index) {
-                      switch (currentFilterStats) {
-                        case 'Все':
-                          return forecasts[index];
-                        case 'Футбол':
-                          return forecasts[index].sport == 'Футбол'
-                              ? forecasts[index]
-                              : Container();
-                        case 'Большой теннис':
-                          return forecasts[index].sport == 'Теннис'
-                              ? forecasts[index]
-                              : Container();
-                        default:
-                          return Container();
-                      }
+            CustomAppBar(label: 'СТАТИСТИКА', vip: false),
+            isLoaded
+                ? PageView(
+                    onPageChanged: (index) {
+                      setState(() {
+                        switch (index) {
+                          case 0:
+                            currentFilterStats = 'Все';
+                            break;
+                          case 1:
+                            currentFilterStats = 'Футбол';
+                            break;
+                          case 2:
+                            currentFilterStats = 'Теннис';
+                            break;
+                        }
+                      });
                     },
-                  ),
-                );
-              },
-            )
+                    controller: statsController,
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      DraggableForecasts(
+                        stream: statsForecastsDB,
+                        isVipForecast: false,
+                      ),
+                      DraggableForecasts(
+                        stream: statsFootballDB,
+                        isVipForecast: false,
+                      ),
+                      DraggableForecasts(
+                        stream: statsTennisDB,
+                        isVipForecast: false,
+                      ),
+                    ],
+                  )
+                : Container(),
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: OpenDrawerButton(),
+            ),
           ],
         ),
       ),
     );
   }
-}
 
-List<ForecastTile> forecasts = [
-  ForecastTile(
-    sport: 'Футбол',
-    matchDate: DateTime.now().toIso8601String(),
-    winner: 0,
-    team1: 'Paris SG',
-    team2: 'Nantes',
-    league: 'France League 1',
-    coef: 1.5,
-    predicted: true,
-    forecast: 'Goals over 1.5',
-  ),
-  ForecastTile(
-    sport: 'Теннис',
-    matchDate: DateTime.now().toIso8601String(),
-    winner: 0,
-    team1: 'Paris SG',
-    team2: 'Nantes',
-    league: 'France League 1',
-    coef: 1.5,
-    predicted: true,
-    forecast: 'Goals over 1.5',
-  ),
-  ForecastTile(
-    sport: 'Теннис',
-    matchDate: DateTime.now().toIso8601String(),
-    winner: 1,
-    team1: 'Paris SG',
-    team2: 'Nantes',
-    league: 'France League 1',
-    coef: 1.5,
-    predicted: false,
-    forecast: 'Goals over 1.5',
-  ),
-  ForecastTile(
-    sport: 'Футбол',
-    matchDate: DateTime.now().toIso8601String(),
-    winner: 0,
-    team1: 'Paris SG',
-    team2: 'Nantes',
-    league: 'France League 1',
-    coef: 1.5,
-    predicted: true,
-    forecast: 'Goals over 1.5',
-  ),
-  ForecastTile(
-    sport: 'Теннис',
-    matchDate: DateTime.now().toIso8601String(),
-    winner: 0,
-    team1: 'Paris SG',
-    team2: 'Nantes',
-    league: 'France League 1',
-    coef: 1.5,
-    predicted: true,
-    forecast: 'Goals over 1.5',
-  ),
-  ForecastTile(
-    sport: 'Футбол',
-    matchDate: DateTime.now().toIso8601String(),
-    winner: 0,
-    team1: 'Paris SG',
-    team2: 'Nantes',
-    league: 'France League 1',
-    coef: 1.5,
-    predicted: false,
-    forecast: 'Goals over 1.5',
-  ),
-];
+  getForecasts() async {
+    statsForecastsDB = await ForecastsDB.getAllForecasts(vip: false);
+    statsFootballDB =
+        await ForecastsDB.getSportsForecasts(vip: false, filter: 'Футбол');
+    statsTennisDB =
+        await ForecastsDB.getSportsForecasts(vip: false, filter: 'Теннис');
+    setState(() => isLoaded = true);
+  }
+}
