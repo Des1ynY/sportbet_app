@@ -227,7 +227,7 @@ class _SignUpState extends State<SignUp> {
         _formKey.currentState?.reset();
         _formKey.currentState?.validate();
       });
-      await UsersDB.addUser({'email': _email});
+      await UsersDB.addUser({'email': _email, 'vip': false});
       Navigator.pop(context);
       await AuthServices.signIn(_email, _password, onError: () {});
     }

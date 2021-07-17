@@ -17,7 +17,6 @@ dependencies:
   firebase_auth: any
   cloud_firestore: any
   fluttertoast: any
-  flutter_local_notifications: any
   colorful_safe_area: any
   sprintf: any
   random_string: ^2.2.0-nullsafety

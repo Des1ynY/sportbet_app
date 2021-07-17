@@ -34,8 +34,4 @@ class ForecastsDB {
         .orderBy('date', descending: true)
         .snapshots();
   }
-
-  static deleteForecast(String id) async {
-    _ref.doc(id).delete();
-  }
 }

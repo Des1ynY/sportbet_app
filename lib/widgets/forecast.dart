@@ -5,7 +5,6 @@ import '/data/theme.dart';
 import '/icons.dart';
 import '/data/funcs.dart';
 import '/widgets/dialod.dart';
-import '/services/database.dart';
 
 class ForecastTile extends StatefulWidget {
   ForecastTile(this.json) {
@@ -43,32 +42,6 @@ class _ForecastTileState extends State<ForecastTile> {
           return CustomDialog(data: widget.json);
         },
       ),
-      onLongPress: () {
-        showDialog(
-          context: context,
-          builder: (context) => Dialog(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: MaterialButton(
-                onPressed: () => _delete(context),
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: Text(
-                    'Удалить прогноз',
-                    style: TextStyle(
-                      color: Color(0xffF85656),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
       child: Container(
         width: width,
         height: 110,
@@ -119,6 +92,7 @@ class _ForecastTileState extends State<ForecastTile> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RichText(
+                      textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       text: TextSpan(
                         style: TextStyle(
@@ -145,6 +119,7 @@ class _ForecastTileState extends State<ForecastTile> {
                     ),
                     Text(
                       widget.league,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: linesColor,
                         fontSize: 14,
@@ -179,11 +154,6 @@ class _ForecastTileState extends State<ForecastTile> {
         ),
       ),
     );
-  }
-
-  _delete(BuildContext context) async {
-    await ForecastsDB.deleteForecast(widget.json['id']);
-    Navigator.pop(context);
   }
 }
 
@@ -222,32 +192,6 @@ class _VIPForecastTileState extends State<VIPForecastTile> {
           return CustomVIPDialog(data: widget.json);
         },
       ),
-      onLongPress: () {
-        showDialog(
-          context: context,
-          builder: (context) => Dialog(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: MaterialButton(
-                onPressed: () => _delete(context),
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: Text(
-                    'Удалить прогноз',
-                    style: TextStyle(
-                      color: Color(0xffF85656),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
       child: Container(
         width: width,
         height: 110,
@@ -298,6 +242,7 @@ class _VIPForecastTileState extends State<VIPForecastTile> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RichText(
+                      textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       text: TextSpan(
                         style: TextStyle(
@@ -318,6 +263,7 @@ class _VIPForecastTileState extends State<VIPForecastTile> {
                     ),
                     Text(
                       widget.league,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: linesColor,
                         fontSize: 14,
@@ -349,10 +295,5 @@ class _VIPForecastTileState extends State<VIPForecastTile> {
         ),
       ),
     );
-  }
-
-  _delete(BuildContext context) async {
-    await ForecastsDB.deleteForecast(widget.json['id']);
-    Navigator.pop(context);
   }
 }
