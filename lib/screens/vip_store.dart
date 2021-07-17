@@ -33,12 +33,11 @@ class _StoreState extends State<Store> {
                       label: 'VIP Подписка',
                     ),
                     Spacer(flex: 2),
-                    VIPStoreTile(lastsFor: '1 день', cost: 250),
+                    VIPStoreTile(count: 2, cost: 250),
                     Spacer(),
-                    VIPStoreTile(lastsFor: '3 дня', cost: 700),
+                    VIPStoreTile(count: 6, cost: 700),
                     Spacer(),
-                    VIPStoreTile(
-                        lastsFor: '7 дней', cost: 1250, profitable: true),
+                    VIPStoreTile(count: 14, cost: 1250, profitable: true),
                     Spacer(flex: 3),
                   ],
                 ),
@@ -59,13 +58,12 @@ class _StoreState extends State<Store> {
 class VIPStoreTile extends StatelessWidget {
   const VIPStoreTile({
     Key? key,
-    required this.lastsFor,
+    required this.count,
     required this.cost,
     this.profitable = false,
   }) : super(key: key);
 
-  final String lastsFor;
-  final int cost;
+  final int cost, count;
   final bool profitable;
 
   @override
@@ -88,7 +86,10 @@ class VIPStoreTile extends StatelessWidget {
                 Expanded(
                   child: Container(
                     child: Text(
-                      '$lastsFor доступа\nк VIP Прогнозам',
+                      count == 2
+                          ? '$count VIP прогноза'
+                          : '$count VIP прогнозов',
+                      softWrap: true,
                       style: TextStyle(
                         color: header,
                         fontWeight: FontWeight.w500,
