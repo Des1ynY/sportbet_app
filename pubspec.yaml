@@ -19,8 +19,8 @@ dependencies:
   fluttertoast: any
   colorful_safe_area: any
   sprintf: any
-  random_string: ^2.2.0-nullsafety
   provider: any
+  in_app_purchase: any
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
