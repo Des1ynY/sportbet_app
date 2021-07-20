@@ -1,3 +1,4 @@
+import 'package:betting_tips/test.dart';
 import 'package:flutter/material.dart';
 
 import '/data/theme.dart';
@@ -67,6 +68,13 @@ class CustomDrawer extends StatelessWidget {
                           onPressed: () =>
                               Navigator.pushNamed(context, storeRoute),
                         ),
+                        DrawerOption(
+                            icon: Icons.aspect_ratio,
+                            label: '',
+                            onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TestTest())))
                       ],
                     ),
                   ],
