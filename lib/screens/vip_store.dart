@@ -4,11 +4,8 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_platform_interface/in_app_purchase_platform_interface.dart';
 
-import '/data/funcs.dart';
 import '/data/theme.dart';
-import '/widgets/logo.dart';
 import '/widgets/drawer.dart';
-import '/widgets/open_drawer_button.dart';
 
 class Store extends StatefulWidget {
   const Store({Key? key}) : super(key: key);
