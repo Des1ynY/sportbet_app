@@ -1,4 +1,4 @@
-import 'package:betting_tips/test.dart';
+import 'package:betting_tips/t.dart';
 import 'package:flutter/material.dart';
 
 import '/data/theme.dart';
@@ -69,12 +69,11 @@ class CustomDrawer extends StatelessWidget {
                               Navigator.pushNamed(context, storeRoute),
                         ),
                         DrawerOption(
-                            icon: Icons.aspect_ratio,
-                            label: '',
-                            onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => TestTest())))
+                          icon: Icons.store,
+                          label: 'VIP подписка',
+                          onPressed: () =>
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Test())),
+                        ),
                       ],
                     ),
                   ],

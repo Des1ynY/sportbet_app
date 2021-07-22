@@ -15,20 +15,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 const bool _kAutoConsume = true;
 
 const String _kConsumableId = 'consumable';
+const String _kUpgradeId = 'upgrade';
 const String _kSilverSubscriptionId = 'subscription_silver';
 const String _kGoldSubscriptionId = 'subscription_gold';
-const List<String> _kProductIds = <String>[
+const List<String> _kProductIds = [
   'vip_forecast_2',
   'vip_forecast_6',
-  'vip_forecast_14',
+  'vip_forecast_14'
 ];
 
-class TestTest extends StatefulWidget {
+class Test extends StatefulWidget {
   @override
-  _TestTestState createState() => _TestTestState();
+  _TestState createState() => _TestState();
 }
 
-class _TestTestState extends State<TestTest> {
+class _TestState extends State<Test> {
   final InAppPurchase _inAppPurchase = InAppPurchase.instance;
   late StreamSubscription<List<PurchaseDetails>> _subscription;
   List<String> _notFoundIds = [];
