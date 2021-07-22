@@ -138,7 +138,7 @@ class _StoreState extends State<Store> {
               height: getScaffoldSize(context),
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
               child: !_isLoading
-                  ? !_isAvailable
+                  ? _isAvailable
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
