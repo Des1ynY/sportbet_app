@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '/data/theme.dart';
 import '/services/auth.dart';
+import '/data/app_state.dart';
 import '/services/router.dart';
-import '/data/funcs.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({Key? key}) : super(key: key);

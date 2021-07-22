@@ -1,3 +1,4 @@
+import 'package:betting_tips/data/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
 
@@ -186,12 +187,27 @@ class _VIPForecastTileState extends State<VIPForecastTile> {
     double width = MediaQuery.of(context).size.width;
 
     return RawMaterialButton(
-      onPressed: () => showDialog(
-        context: context,
-        builder: (context) {
-          return CustomVIPDialog(data: widget.json);
-        },
-      ),
+      onPressed: () async {
+        if (forecasts.contains(widget.json['id'])) {
+          showDialog(
+            context: context,
+            builder: (context) => CustomVIPDialog(data: widget.json),
+          );
+        } else {
+          var result = await showDialog(
+            context: context,
+            builder: (context) {
+              return OpenForecastDialog(data: widget.json);
+            },
+          );
+          if (result) {
+            showDialog(
+              context: context,
+              builder: (context) => CustomVIPDialog(data: widget.json),
+            );
+          }
+        }
+      },
       child: Container(
         width: width,
         height: 110,

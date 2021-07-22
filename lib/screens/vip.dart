@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 
-import '/widgets/scroll_sheet.dart';
-import '/data/funcs.dart';
 import '/data/theme.dart';
+import '/data/app_state.dart';
 import '/widgets/appbar.dart';
 import '/widgets/drawer.dart';
 import '/services/database.dart';
+import '/widgets/scroll_sheet.dart';
 import '/widgets/open_drawer_button.dart';
 
 PageController vipController = PageController();

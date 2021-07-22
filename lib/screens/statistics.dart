@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 
-import '/data/funcs.dart';
 import '/data/theme.dart';
+import '/data/app_state.dart';
 import '/widgets/appbar.dart';
 import '/widgets/drawer.dart';
 import '/services/database.dart';

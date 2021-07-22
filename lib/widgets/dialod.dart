@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '/icons.dart';
 import '/data/funcs.dart';
 import '/data/theme.dart';
+import '/data/app_state.dart';
+import '/services/router.dart';
+import '/services/database.dart';
 
 class CustomDialog extends StatelessWidget {
   const CustomDialog({
@@ -387,6 +390,172 @@ class CustomVIPDialog extends StatelessWidget {
             style: TextStyle(color: mainColor, fontWeight: FontWeight.w500),
           )
         ],
+      ),
+    );
+  }
+}
+
+class OpenForecastDialog extends StatelessWidget {
+  const OpenForecastDialog({required this.data, Key? key}) : super(key: key);
+
+  final Map<String, dynamic> data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        height: getScaffoldSize(context) * 0.47,
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              children: [
+                Center(
+                  child: Container(
+                    child: Icon(
+                      data['sport'] == 'Футбол'
+                          ? Icons.sports_soccer
+                          : Icons.sports_tennis,
+                      color: Color(0xffBFBFBF),
+                      size: 60,
+                    ),
+                  ),
+                ),
+                IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          data['team1'].toString(),
+                          softWrap: true,
+                          style: TextStyle(
+                            color: header,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                      VerticalDivider(
+                        width: 30,
+                        color: header,
+                        thickness: 2,
+                        indent: 5,
+                        endIndent: 5,
+                      ),
+                      Expanded(
+                        child: Text(
+                          data['team2'].toString(),
+                          softWrap: true,
+                          style: TextStyle(
+                            color: header,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      getFormattedDate(data['date']),
+                      style: TextStyle(
+                        color: Color(0xff9498A1),
+                        fontSize: 14,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 7,
+                    ),
+                    Text(
+                      formatTime(data['date']),
+                      style: TextStyle(
+                        color: Color(0xff9498A1),
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Text(
+                  'Открыть доступ к данному VIP-прогнозу?',
+                  softWrap: true,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Оплачено VIP-прогнозов: $vipCount',
+                  softWrap: true,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: header,
+                    fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () async {
+                    if (vipCount > 0) {
+                      vipCount -= 1;
+                      forecasts.add(data['id']);
+                      await UsersDB.addForecast(appStateToJson());
+                      Navigator.pop(context, true);
+                    } else {
+                      Navigator.pop(context, false);
+                      Navigator.pushNamed(context, storeRoute);
+                    }
+                  },
+                  child: Text(
+                    'Подтвердить',
+                    style: TextStyle(
+                      color: Color(0xff179CE7),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  child: Text(
+                    'Отмена',
+                    style: TextStyle(
+                      color: Color(0xff179CE7),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

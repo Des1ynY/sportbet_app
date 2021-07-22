@@ -10,6 +10,8 @@ import '/widgets/drawer.dart';
 import '/widgets/logo.dart';
 import '/widgets/open_drawer_button.dart';
 import '/widgets/product_tile.dart';
+import '/data/app_state.dart';
+import '/services/database.dart';
 
 const _productsIds = ['vip_forecast_2', 'vip_forecast_6', 'vip_forecast_14'];
 const _autoConsume = true;
@@ -200,13 +202,17 @@ class _StoreState extends State<Store> {
           title: productDetails.title,
           cost: int.parse(productDetails.price),
           profitable: productDetails.id == 'vip_forecast_14',
-          onPressed: () {
+          onPressed: () async {
             var purchaseParam = GooglePlayPurchaseParam(
               productDetails: productDetails,
             );
             _iap.buyConsumable(
               purchaseParam: purchaseParam,
               autoConsume: _autoConsume,
+            );
+            await UsersDB.addVIPs(
+              userEmail,
+              int.parse(productDetails.id.substring(12)) + vipCount,
             );
           },
         );

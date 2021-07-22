@@ -1,3 +1,4 @@
+import 'package:betting_tips/data/funcs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -7,8 +8,8 @@ import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/auth/sign_in.dart';
-import 'screens/statistics.dart';
 import 'services/router.dart';
+import 'data/app_state.dart';
 import 'services/auth.dart';
 import 'data/theme.dart';
 
@@ -57,6 +58,8 @@ class AuthChecker extends StatelessWidget {
   Widget build(BuildContext context) {
     User? currentUser = context.watch<User?>();
 
-    return currentUser == null ? SignIn() : Statistics();
+    if (currentUser != null) userEmail = currentUser.email!;
+
+    return currentUser == null ? SignIn() : onStats();
   }
 }
