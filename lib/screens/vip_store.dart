@@ -24,7 +24,6 @@ class Store extends StatefulWidget {
 class _StoreState extends State<Store> {
   final InAppPurchase _iap = InAppPurchase.instance;
   late StreamSubscription<List<PurchaseDetails>> _subscription;
-  List<String> _notFoundIds = [];
   List<ProductDetails> _products = [];
   List<PurchaseDetails> _purchases = [];
   bool _isAvailable = false, _purchasePending = false, _isLoading = true;
@@ -51,7 +50,6 @@ class _StoreState extends State<Store> {
         _isAvailable = _isAvailable;
         _products = [];
         _purchases = [];
-        _notFoundIds = [];
         _purchasePending = false;
         _isLoading = false;
       });
@@ -66,7 +64,6 @@ class _StoreState extends State<Store> {
         _isAvailable = isAvailable;
         _products = detailResponse.productDetails;
         _purchases = [];
-        _notFoundIds = detailResponse.notFoundIDs;
         _purchasePending = false;
         _isLoading = false;
       });
@@ -78,7 +75,6 @@ class _StoreState extends State<Store> {
         _isAvailable = isAvailable;
         _products = detailResponse.productDetails;
         _purchases = [];
-        _notFoundIds = detailResponse.notFoundIDs;
         _purchasePending = false;
         _isLoading = false;
       });
@@ -89,7 +85,6 @@ class _StoreState extends State<Store> {
       _isAvailable = isAvailable;
       _products = detailResponse.productDetails;
       _purchases = [];
-      _notFoundIds = detailResponse.notFoundIDs;
       _purchasePending = false;
       _isLoading = false;
     });
@@ -138,7 +133,7 @@ class _StoreState extends State<Store> {
               height: getScaffoldSize(context),
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
               child: !_isLoading
-                  ? _isAvailable
+                  ? _isAvailable && _queryError != null
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -178,6 +173,18 @@ class _StoreState extends State<Store> {
               right: 10,
               child: OpenDrawerButton(),
             ),
+            if (_purchasePending)
+              Stack(
+                children: [
+                  Opacity(
+                    opacity: 0.3,
+                    child: ModalBarrier(dismissible: false, color: Colors.grey),
+                  ),
+                  Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ],
+              ),
           ],
         ),
       ),
