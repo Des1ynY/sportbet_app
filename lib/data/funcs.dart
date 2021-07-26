@@ -1,10 +1,8 @@
-import 'package:betting_tips/screens/statistics.dart';
-import 'package:betting_tips/services/database.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
 
-import '/data/app_state.dart';
+String currentFilterStats = 'Все';
+String currentFilterVIP = 'Все';
 
 bool isValidEmail(String? value) {
   if (value != null) {
@@ -42,32 +40,4 @@ String getFormattedDate(String date) {
     matchDate.month,
     matchDate.year,
   ]);
-}
-
-void appStateFromJson(Map<String, dynamic> json) {
-  userEmail = json['email'];
-  forecasts = json['forecasts'] ?? [];
-  vipCount = json['vipCount'] ?? 0;
-}
-
-Map<String, dynamic> appStateToJson() {
-  return {
-    'email': userEmail,
-    'forecasts': forecasts,
-    'vipCount': vipCount,
-  };
-}
-
-onStats() {
-  return FutureBuilder(
-    future: UsersDB.getUser(userEmail),
-    builder: (
-      context,
-      AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> doc,
-    ) {
-      var userInfo = doc.data?.data();
-      appStateFromJson(userInfo!);
-      return Statistics();
-    },
-  );
 }

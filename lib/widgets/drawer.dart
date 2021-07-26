@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '/data/funcs.dart';
 import '/data/theme.dart';
 import '/services/auth.dart';
-import '/data/app_state.dart';
 import '/services/router.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -63,7 +63,7 @@ class CustomDrawer extends StatelessWidget {
                         ),
                         DrawerOption(
                           icon: Icons.store,
-                          label: 'VIP подписка',
+                          label: 'VIP магазин',
                           onPressed: () =>
                               Navigator.pushNamed(context, storeRoute),
                         ),

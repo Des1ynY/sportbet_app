@@ -1,9 +1,9 @@
 name: betting_tips
-description: A new Flutter project.
+description: A Betting Tips app.
 
 publish_to: 'none' 
 
-version: 1.0.4+5
+version: 1.0.5+6
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -20,7 +20,7 @@ dependencies:
   colorful_safe_area: any
   sprintf: any
   provider: any
-  in_app_purchase: any
+  purchases_flutter: any
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
@@ -33,7 +33,6 @@ flutter_native_splash:
   color: '#ffffff'
   image: assets/logo.png
   android: true
-  ios: true
 
 flutter:
 

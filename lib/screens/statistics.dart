@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 
+import '/data/funcs.dart';
 import '/data/theme.dart';
-import '/data/app_state.dart';
 import '/widgets/appbar.dart';
 import '/widgets/drawer.dart';
 import '/services/database.dart';
@@ -74,7 +74,24 @@ class _StatisticsState extends State<Statistics> {
                       ),
                     ],
                   )
-                : Container(),
+                : Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: getScaffoldSize(context) - 140,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                        ),
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: mainColor,
+                        ),
+                      ),
+                    ),
+                  ),
             Positioned(
               bottom: 10,
               right: 10,

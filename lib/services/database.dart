@@ -12,12 +12,12 @@ class UsersDB {
     await _ref.doc(email).set({'vipCount': count}, SetOptions(merge: true));
   }
 
-  static addForecast(Map<String, dynamic> userInfo) async {
-    await _ref.doc(userInfo['email']).set(userInfo, SetOptions(merge: true));
+  static openForecast(String email, Map<String, dynamic> userInfo) async {
+    await _ref.doc(email).set(userInfo, SetOptions(merge: true));
   }
 
-  static getUser(String email) {
-    return _ref.doc(email).get();
+  static getUser(String email) async {
+    return _ref.where('email', isEqualTo: email).snapshots();
   }
 }
 

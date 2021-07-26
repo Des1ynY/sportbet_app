@@ -523,7 +523,10 @@ class OpenForecastDialog extends StatelessWidget {
                     if (vipCount > 0) {
                       vipCount -= 1;
                       forecasts.add(data['id']);
-                      await UsersDB.addForecast(appStateToJson());
+                      await UsersDB.openForecast(
+                        userEmail,
+                        {'forecasts': forecasts, 'vipCount': vipCount},
+                      );
                       Navigator.pop(context, true);
                     } else {
                       Navigator.pop(context, false);
