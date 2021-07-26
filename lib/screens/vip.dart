@@ -55,8 +55,8 @@ class _VIPState extends State<VIP> {
                       if (snapshot.hasData) {
                         var info = snapshot.data?.docs.first.data();
 
-                        forecasts = info?['forecasts'];
-                        vipCount = info?['vipCount'];
+                        forecasts = info?['forecasts'] ?? [];
+                        vipCount = info?['vipCount'] ?? 0;
 
                         return PageView(
                           onPageChanged: (index) {
