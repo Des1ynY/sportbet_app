@@ -1,4 +1,3 @@
-import 'package:betting_tips/data/funcs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -12,6 +11,7 @@ import 'services/router.dart';
 import 'data/app_state.dart';
 import 'services/auth.dart';
 import 'data/theme.dart';
+import '/data/funcs.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
