@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/data/funcs.dart';
 import '/data/theme.dart';
+import '/widgets/logo.dart';
 import '/services/auth.dart';
 import '/services/router.dart';
 
@@ -30,25 +31,7 @@ class _SignInState extends State<SignIn> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  children: [
-                    Container(
-                      height: 150,
-                      child: Image.asset('assets/logo.png'),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Betting Tips',
-                      style: TextStyle(
-                        color: mainColor,
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
+                Logo(label: 'Betting Tops'),
                 Spacer(),
                 Form(
                   key: _formKey,

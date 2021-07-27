@@ -5,16 +5,16 @@ class PurchaseApi {
   static const _apiKey = 'PdvrqagkiyFjeWAsZQPJSJTpyyLSarrB';
 
   static Future<void> init() async {
-    await Purchases.setDebugLogsEnabled(true);
+    await Purchases.setDebugLogsEnabled(false);
     await Purchases.setup(_apiKey);
   }
 
   static Future<List<Offering>> fetchOffers() async {
     try {
       var offers = await Purchases.getOfferings();
-      var current = offers.current;
+      var current = offers.all.values.toList();
 
-      return current == null ? [] : [current];
+      return current;
     } catch (e) {
       return [];
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '/data/app_state.dart';
 import '/data/funcs.dart';
@@ -30,6 +31,7 @@ class _StoreState extends State<Store> {
   }
 
   Future<void> _initStore() async {
+    await Purchases.logIn(userEmail);
     var offers = await PurchaseApi.fetchOffers();
 
     if (offers.isEmpty) {
@@ -82,12 +84,23 @@ class _StoreState extends State<Store> {
                               onPressed: () async {
                                 var res =
                                     await PurchaseApi.purchasePackage(package);
-                                int vips = int.parse(package.product.title
-                                    .substring(0, 1)
-                                    .replaceAll(' ', ''));
+                                int vips = 0;
+
+                                switch (package.product.identifier) {
+                                  case 'vip_forecast_2':
+                                    vips = 2;
+                                    break;
+                                  case 'vip_forecast_6':
+                                    vips = 6;
+                                    break;
+                                  case 'vip_forecast_14':
+                                    vips = 14;
+                                    break;
+                                }
 
                                 if (res) {
-                                  await UsersDB.addVIPs(userEmail, vips);
+                                  await UsersDB.addVIPs(
+                                      userEmail, vipCount + vips);
                                 }
                               },
                             );
@@ -113,5 +126,11 @@ class _StoreState extends State<Store> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    Purchases.logOut();
+    super.dispose();
   }
 }

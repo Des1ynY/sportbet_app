@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/data/funcs.dart';
 import '/data/theme.dart';
+import '/widgets/logo.dart';
 import '/services/auth.dart';
 import '/services/database.dart';
 
@@ -29,22 +30,7 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  children: [
-                    Container(
-                      height: 150,
-                      child: Image.asset('assets/logo.png'),
-                    ),
-                    Text(
-                      'Betting Tips',
-                      style: TextStyle(
-                        color: mainColor,
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
+                Logo(label: 'Betting Tips'),
                 Spacer(),
                 Form(
                   key: _formKey,
