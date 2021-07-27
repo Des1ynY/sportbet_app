@@ -1,25 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:provider/provider.dart';
 
+import 'services/in_app_purchases.dart';
 import 'screens/auth/sign_in.dart';
+import 'screens/statistics.dart';
 import 'services/router.dart';
 import 'data/app_state.dart';
 import 'services/auth.dart';
 import 'data/theme.dart';
-import '/data/funcs.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await PurchaseApi.init();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  if (defaultTargetPlatform == TargetPlatform.android) {
-    InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
-  }
   runApp(MyApp());
 }
 
@@ -60,6 +57,6 @@ class AuthChecker extends StatelessWidget {
 
     if (currentUser != null) userEmail = currentUser.email!;
 
-    return currentUser == null ? SignIn() : onStats();
+    return currentUser == null ? SignIn() : Statistics();
   }
 }

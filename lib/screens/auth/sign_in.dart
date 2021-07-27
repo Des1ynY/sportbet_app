@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/data/funcs.dart';
 import '/data/theme.dart';
+import '/widgets/logo.dart';
 import '/services/auth.dart';
 import '/services/router.dart';
 
@@ -25,30 +26,12 @@ class _SignInState extends State<SignIn> {
         body: SingleChildScrollView(
           child: Container(
             height: getScaffoldSize(context),
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+            padding: EdgeInsets.symmetric(vertical: 40, horizontal: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  children: [
-                    Container(
-                      height: 150,
-                      child: Image.asset('assets/logo.png'),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Betting Tips',
-                      style: TextStyle(
-                        color: mainColor,
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
+                Logo(label: 'Betting Tips'),
                 Spacer(),
                 Form(
                   key: _formKey,

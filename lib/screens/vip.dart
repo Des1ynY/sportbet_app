@@ -3,6 +3,7 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 
 import '/data/theme.dart';
+import '/data/funcs.dart';
 import '/data/app_state.dart';
 import '/widgets/appbar.dart';
 import '/widgets/drawer.dart';
@@ -20,9 +21,10 @@ class VIP extends StatefulWidget {
 }
 
 class _VIPState extends State<VIP> {
-  late Stream<QuerySnapshot<Map<String, dynamic>>>? vipForecastsDB;
-  late Stream<QuerySnapshot<Map<String, dynamic>>>? vipFootballDB;
-  late Stream<QuerySnapshot<Map<String, dynamic>>>? vipTennisDB;
+  late Stream<QuerySnapshot<Map<String, dynamic>>> vipForecastsDB;
+  late Stream<QuerySnapshot<Map<String, dynamic>>> vipFootballDB;
+  late Stream<QuerySnapshot<Map<String, dynamic>>> vipTennisDB;
+  late Stream<QuerySnapshot<Map<String, dynamic>>> userDB;
   DateTime currentDate = DateTime(2000);
   DateTime lastDate = DateTime(2000);
   bool isLoaded = false;
@@ -43,40 +45,94 @@ class _VIPState extends State<VIP> {
           children: [
             CustomAppBar(label: 'VIP ПРОГНОЗ', vip: true),
             isLoaded
-                ? PageView(
-                    onPageChanged: (index) {
-                      setState(() {
-                        switch (index) {
-                          case 0:
-                            currentFilterVIP = 'Все';
-                            break;
-                          case 1:
-                            currentFilterVIP = 'Футбол';
-                            break;
-                          case 2:
-                            currentFilterVIP = 'Теннис';
-                            break;
-                        }
-                      });
+                ? StreamBuilder(
+                    stream: userDB,
+                    builder: (
+                      context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot,
+                    ) {
+                      if (snapshot.hasData) {
+                        var info = snapshot.data?.docs.first.data();
+
+                        forecasts = info?['forecasts'] ?? [];
+                        vipCount = info?['vipCount'] ?? 0;
+
+                        return PageView(
+                          onPageChanged: (index) {
+                            setState(
+                              () {
+                                switch (index) {
+                                  case 0:
+                                    currentFilterVIP = 'Все';
+                                    break;
+                                  case 1:
+                                    currentFilterVIP = 'Футбол';
+                                    break;
+                                  case 2:
+                                    currentFilterVIP = 'Теннис';
+                                    break;
+                                }
+                              },
+                            );
+                          },
+                          controller: vipController,
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            DraggableForecasts(
+                              stream: vipForecastsDB,
+                              isVipForecast: true,
+                            ),
+                            DraggableForecasts(
+                              stream: vipFootballDB,
+                              isVipForecast: true,
+                            ),
+                            DraggableForecasts(
+                              stream: vipTennisDB,
+                              isVipForecast: true,
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: getScaffoldSize(context) - 140,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25),
+                                topRight: Radius.circular(25),
+                              ),
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                            ),
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: mainColor,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
                     },
-                    controller: vipController,
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      DraggableForecasts(
-                        stream: vipForecastsDB,
-                        isVipForecast: true,
-                      ),
-                      DraggableForecasts(
-                        stream: vipFootballDB,
-                        isVipForecast: true,
-                      ),
-                      DraggableForecasts(
-                        stream: vipTennisDB,
-                        isVipForecast: true,
-                      ),
-                    ],
                   )
-                : Container(),
+                : Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: getScaffoldSize(context) - 140,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                        ),
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: mainColor,
+                        ),
+                      ),
+                    ),
+                  ),
             Positioned(
               bottom: 10,
               right: 10,
@@ -98,6 +154,7 @@ class _VIPState extends State<VIP> {
       vip: true,
       filter: 'Теннис',
     );
+    userDB = await UsersDB.getUser(userEmail);
     setState(() => isLoaded = true);
   }
 }

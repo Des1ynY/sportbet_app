@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/data/theme.dart';
-import '/data/app_state.dart';
+import '/data/funcs.dart';
 
 class CustomAppBar extends StatefulWidget {
   const CustomAppBar({

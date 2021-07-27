@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '/data/funcs.dart';
 import '/data/theme.dart';
+import '/widgets/logo.dart';
 import '/services/auth.dart';
 
 class Restore extends StatefulWidget {
@@ -22,26 +23,11 @@ class _RestoreState extends State<Restore> {
       child: Scaffold(
         body: Container(
           height: getScaffoldSize(context),
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+          padding: EdgeInsets.symmetric(vertical: 40, horizontal: 30),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                children: [
-                  Container(
-                    height: 150,
-                    child: Image.asset('assets/logo.png'),
-                  ),
-                  Text(
-                    'Betting Tips',
-                    style: TextStyle(
-                      color: mainColor,
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+              Logo(label: 'Betting Tips'),
               Spacer(),
               Form(
                 key: _formKey,

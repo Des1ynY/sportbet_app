@@ -200,7 +200,7 @@ class _VIPForecastTileState extends State<VIPForecastTile> {
               return OpenForecastDialog(data: widget.json);
             },
           );
-          if (result) {
+          if (result && result != null) {
             showDialog(
               context: context,
               builder: (context) => CustomVIPDialog(data: widget.json),
