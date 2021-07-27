@@ -26,7 +26,7 @@ class _SignUpState extends State<SignUp> {
         body: SingleChildScrollView(
           child: Container(
             height: getScaffoldSize(context),
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

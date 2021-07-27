@@ -23,7 +23,7 @@ class _RestoreState extends State<Restore> {
       child: Scaffold(
         body: Container(
           height: getScaffoldSize(context),
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+          padding: EdgeInsets.symmetric(vertical: 40, horizontal: 30),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

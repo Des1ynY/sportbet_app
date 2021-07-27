@@ -26,12 +26,12 @@ class _SignInState extends State<SignIn> {
         body: SingleChildScrollView(
           child: Container(
             height: getScaffoldSize(context),
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+            padding: EdgeInsets.symmetric(vertical: 40, horizontal: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Logo(label: 'Betting Tops'),
+                Logo(label: 'Betting Tips'),
                 Spacer(),
                 Form(
                   key: _formKey,
