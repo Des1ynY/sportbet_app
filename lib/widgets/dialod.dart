@@ -144,17 +144,24 @@ class CustomDialog extends StatelessWidget {
                           ),
                           Container(
                             height: 23,
-                            child: data['predicted']
+                            child: data['predicted'] == 'true'
                                 ? Icon(
                                     CustomIcons.check_1,
                                     color: mainColor,
                                     size: 30,
                                   )
-                                : Icon(
-                                    Icons.close,
-                                    color: Color(0xff5B5C61).withOpacity(0.8),
-                                    size: 30,
-                                  ),
+                                : data['predicted'] == 'false'
+                                    ? Icon(
+                                        Icons.close,
+                                        color:
+                                            Color(0xff5B5C61).withOpacity(0.8),
+                                        size: 30,
+                                      )
+                                    : Icon(
+                                        Icons.sync,
+                                        color: mainColor.withOpacity(0.7),
+                                        size: 30,
+                                      ),
                           ),
                         ],
                       ),
