@@ -214,8 +214,8 @@ class _SignUpState extends State<SignUp> {
         _formKey.currentState?.validate();
       });
       await UsersDB.addUser({'email': _email, 'vipCount': 0, 'forecasts': []});
-      Navigator.pop(context);
       await AuthServices.signIn(_email, _password, onError: () {});
+      Navigator.pop(context);
     }
   }
 }

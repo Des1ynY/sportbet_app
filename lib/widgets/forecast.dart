@@ -1,9 +1,9 @@
-import 'package:betting_tips/data/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
 
 import '/data/theme.dart';
 import '/icons.dart';
+import '/data/app_state.dart';
 import '/data/funcs.dart';
 import '/widgets/dialod.dart';
 
