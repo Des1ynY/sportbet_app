@@ -22,8 +22,14 @@ class ForecastTile extends StatefulWidget {
 
   final Map<String, dynamic> json;
   late final double coef;
-  late final bool predicted;
-  late final String matchDate, team1, team2, league, sport, forecast, winner;
+  late final String matchDate,
+      team1,
+      team2,
+      league,
+      sport,
+      forecast,
+      winner,
+      predicted;
 
   @override
   _ForecastTileState createState() => _ForecastTileState();
@@ -139,17 +145,23 @@ class _ForecastTileState extends State<ForecastTile> {
             ),
             Container(
               width: 50,
-              child: widget.predicted
+              child: widget.predicted == 'true'
                   ? Icon(
                       CustomIcons.check_1,
                       color: mainColor,
                       size: 30,
                     )
-                  : Icon(
-                      CustomIcons.cancel,
-                      color: linesColor.withOpacity(0.8),
-                      size: 30,
-                    ),
+                  : widget.predicted == 'false'
+                      ? Icon(
+                          Icons.close,
+                          color: Color(0xff5B5C61).withOpacity(0.8),
+                          size: 30,
+                        )
+                      : Icon(
+                          Icons.sync,
+                          color: mainColor.withOpacity(0.7),
+                          size: 30,
+                        ),
             ),
           ],
         ),
