@@ -6,11 +6,12 @@ class VIPStoreTile extends StatelessWidget {
     Key? key,
     required this.title,
     required this.cost,
+    required this.currency,
     required this.onPressed,
     this.profitable = false,
   }) : super(key: key);
 
-  final String title;
+  final String title, currency;
   final double cost;
   final bool profitable;
   final VoidCallback onPressed;
@@ -53,9 +54,9 @@ class VIPStoreTile extends StatelessWidget {
                     endIndent: 20,
                   ),
                   Container(
-                    width: 80,
+                    width: 100,
                     child: Text(
-                      sprintf('%.00f ₽', [cost]),
+                      sprintf('%.00f $currency', [cost]),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 24,

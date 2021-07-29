@@ -31,7 +31,6 @@ class _StoreState extends State<Store> {
   }
 
   Future<void> _initStore() async {
-    await Purchases.logIn(userEmail);
     var offers = await PurchaseApi.fetchOffers();
 
     if (offers.isEmpty) {
@@ -79,6 +78,7 @@ class _StoreState extends State<Store> {
                             return VIPStoreTile(
                               title: package.product.title,
                               cost: package.product.price,
+                              currency: package.product.currencyCode,
                               profitable:
                                   package.product.title.startsWith('14'),
                               onPressed: () async {
@@ -86,19 +86,18 @@ class _StoreState extends State<Store> {
                                     await PurchaseApi.purchasePackage(package);
                                 int vips = 0;
 
-                                switch (package.product.identifier) {
-                                  case 'vip_forecast_2':
-                                    vips = 2;
-                                    break;
-                                  case 'vip_forecast_6':
-                                    vips = 6;
-                                    break;
-                                  case 'vip_forecast_14':
-                                    vips = 14;
-                                    break;
-                                }
-
                                 if (res) {
+                                  switch (package.product.identifier) {
+                                    case 'vip_forecast_2':
+                                      vips = 2;
+                                      break;
+                                    case 'vip_forecast_6':
+                                      vips = 6;
+                                      break;
+                                    case 'vip_forecast_14':
+                                      vips = 14;
+                                      break;
+                                  }
                                   await UsersDB.addVIPs(
                                       userEmail, vipCount + vips);
                                 }
@@ -126,11 +125,5 @@ class _StoreState extends State<Store> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    Purchases.logOut();
-    super.dispose();
   }
 }

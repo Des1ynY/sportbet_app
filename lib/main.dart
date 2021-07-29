@@ -15,7 +15,6 @@ import 'data/theme.dart';
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await PurchaseApi.init();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(MyApp());
 }
@@ -57,6 +56,16 @@ class AuthChecker extends StatelessWidget {
 
     if (currentUser != null) userEmail = currentUser.email!;
 
-    return currentUser == null ? SignIn() : Statistics();
+    if (currentUser != null) {
+      userEmail = currentUser.email!;
+      _initStore();
+      return Statistics();
+    } else {
+      return SignIn();
+    }
+  }
+
+  _initStore() async {
+    await PurchaseApi.init();
   }
 }

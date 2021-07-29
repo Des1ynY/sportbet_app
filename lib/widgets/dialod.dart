@@ -22,10 +22,9 @@ class CustomDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Container(
-        height: getScaffoldSize(context) * 0.6,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Column(
               children: [
@@ -105,70 +104,73 @@ class CustomDialog extends StatelessWidget {
                 ),
               ],
             ),
-            Flexible(
+            SizedBox(
+              height: 30,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      field('Лига'),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      field('Счет матча'),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      field('Победитель'),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      field('Прогноз на матч'),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      field('Коэффициент ставки'),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'Результат ставки: ',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Color(0xff9498A1),
-                            ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    field('Лига'),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    field('Счет матча'),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    field('Победитель'),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    field('Прогноз на матч'),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    field('Коэффициент ставки'),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Результат ставки: ',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Color(0xff9498A1),
                           ),
-                          Container(
-                            height: 23,
-                            child: data['predicted'] == 'true'
-                                ? Icon(
-                                    CustomIcons.check_1,
-                                    color: mainColor,
-                                    size: 30,
-                                  )
-                                : data['predicted'] == 'false'
-                                    ? Icon(
-                                        Icons.close,
-                                        color:
-                                            Color(0xff5B5C61).withOpacity(0.8),
-                                        size: 30,
-                                      )
-                                    : Icon(
-                                        Icons.sync,
-                                        color: mainColor.withOpacity(0.7),
-                                        size: 30,
-                                      ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        Container(
+                          height: 23,
+                          child: data['predicted'] == 'true'
+                              ? Icon(
+                                  CustomIcons.check_1,
+                                  color: mainColor,
+                                  size: 30,
+                                )
+                              : data['predicted'] == 'false'
+                                  ? Icon(
+                                      Icons.close,
+                                      color: Color(0xff5B5C61).withOpacity(0.8),
+                                      size: 30,
+                                    )
+                                  : Icon(
+                                      Icons.sync,
+                                      color: mainColor.withOpacity(0.7),
+                                      size: 30,
+                                    ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
+            ),
+            SizedBox(
+              height: 30,
             ),
             TextButton(
               onPressed: () {
@@ -244,10 +246,9 @@ class CustomVIPDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Container(
-        height: getScaffoldSize(context) * 0.55,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Column(
               children: [
@@ -327,27 +328,31 @@ class CustomVIPDialog extends StatelessWidget {
                 ),
               ],
             ),
-            Flexible(
+            SizedBox(
+              height: 30,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      field('Лига'),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      field('Прогноз на матч'),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      field('Коэффициент ставки'),
-                    ],
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    field('Лига'),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    field('Прогноз на матч'),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    field('Коэффициент ставки'),
+                  ],
                 ),
               ),
+            ),
+            SizedBox(
+              height: 30,
             ),
             TextButton(
               onPressed: () {
@@ -411,13 +416,12 @@ class OpenForecastDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       child: Container(
-        height: getScaffoldSize(context) * 0.47,
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
@@ -498,6 +502,9 @@ class OpenForecastDialog extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(
+              height: 30,
+            ),
             Column(
               children: [
                 Text(
@@ -521,6 +528,9 @@ class OpenForecastDialog extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 30,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,

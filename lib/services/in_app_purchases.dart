@@ -1,12 +1,14 @@
 import 'package:purchases_flutter/object_wrappers.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
+import '/data/app_state.dart';
+
 class PurchaseApi {
   static const _apiKey = 'PdvrqagkiyFjeWAsZQPJSJTpyyLSarrB';
 
   static Future<void> init() async {
     await Purchases.setDebugLogsEnabled(false);
-    await Purchases.setup(_apiKey);
+    await Purchases.setup(_apiKey, appUserId: userEmail);
   }
 
   static Future<List<Offering>> fetchOffers() async {
